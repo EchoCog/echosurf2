@@ -39,7 +39,8 @@ class SeleniumInterface:
                     browser = self.playwright.chromium.connect_over_cdp(f"http://localhost:{port}")
                     for context in browser.contexts:
                         for page in context.pages:
-                            if "chatgpt.com" in page.url:
+                            parsed_url = urlparse(page.url)
+                            if parsed_url.hostname and parsed_url.hostname.endswith("chatgpt.com"):
                                 self.browser = browser
                                 self.page = page
                                 self.logger.info(f"Connected to existing ChatGPT session on port {port}")
