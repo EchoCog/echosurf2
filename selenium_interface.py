@@ -40,7 +40,7 @@ class SeleniumInterface:
                     for context in browser.contexts:
                         for page in context.pages:
                             parsed_url = urlparse(page.url)
-                            if parsed_url.hostname and parsed_url.hostname.endswith("chatgpt.com"):
+                            if parsed_url.hostname and (parsed_url.hostname == "chatgpt.com" or parsed_url.hostname.endswith(".chatgpt.com")):
                                 self.browser = browser
                                 self.page = page
                                 self.logger.info(f"Connected to existing ChatGPT session on port {port}")
