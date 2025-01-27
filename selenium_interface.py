@@ -9,6 +9,7 @@ import io
 import base64
 from dotenv import load_dotenv
 from deep_tree_echo import DeepTreeEcho, TreeNode
+from urllib.parse import urlparse
 
 # Create templates directory
 os.makedirs('templates', exist_ok=True)
@@ -309,7 +310,8 @@ class SeleniumInterface:
             try:
                 # Get current URL and check if we need to navigate
                 self.logger.info(f"Current URL before sending message: {self.page.url}")
-                if not self.page.url.startswith("https://chat.openai.com"):
+                parsed_url = urlparse(self.page.url)
+                if parsed_url.hostname != "chat.openai.com":
                     self.logger.info("Not on chat page, navigating...")
                     self.page.goto("https://chat.openai.com", wait_until="networkidle")
                     self.logger.info(f"Navigated to: {self.page.url}")
