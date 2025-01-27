@@ -66,7 +66,6 @@ def main():
         # Authenticate each service
         for service_name, config in services.items():
             if any(config['credentials'].values()):  # Only try if we have credentials
-                logging.info(f"Authenticating {service_name}...")
                 success = browser.authenticate_service(
                     service_name,
                     config['container'],
