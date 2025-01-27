@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      DISPLAY: ':0'
+      DISPLAY: ':99.0'
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.10
@@ -37,3 +37,10 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+
+    - name: Install xvfb
+      run: sudo apt-get install -y xvfb
+
+    - name: Start xvfb and run tests
+      run: |
+        xvfb-run --auto-servernum --server-args="-screen 0 1024x768x24" pytest
